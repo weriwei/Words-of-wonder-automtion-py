@@ -10,8 +10,8 @@ print("Pressione X para tirar um print da tela: ")
 while(True):
     
     if keyboard.is_pressed('x'):
-        
-        f.getScreenshot(2240, 660, 150, 40)
+        topLeft = f.getBlueStacksTopleft()
+        f.getScreenshot(125+topLeft.x, 378+topLeft.y, 150, 40)
 
         charsRecognized = f.recognize()
         

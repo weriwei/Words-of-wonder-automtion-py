@@ -19,7 +19,7 @@ def getAllPermutations(charList):
 
 
 def getDictionary():
-    pathWords = './palavrasFinal.txt'
+    pathWords = './final.txt'
     wordsList = []
 
     arquivo = open(pathWords, 'r')
@@ -72,9 +72,9 @@ def getListPositions(chars):
     positionsList = []
 
     if(length == 3):
-        positionsList.append([2290, 760, chars[0], False])
-        positionsList.append([2200, 910, chars[1], False])
-        positionsList.append([2380, 910, chars[2], False])
+        positionsList.append([196, 443, chars[0], False])
+        positionsList.append([143, 610, chars[2], False])
+        positionsList.append([243, 605, chars[3], False])
 
     elif(length == 4):
         positionsList.append([2290, 750, chars[0], False])
@@ -83,28 +83,37 @@ def getListPositions(chars):
         positionsList.append([2400, 860, chars[3], False])
 
     elif(length == 5):
-        positionsList.append([2312, 740, chars[0], False])
-        positionsList.append([2222, 805, chars[1], False])
-        positionsList.append([2255, 915, chars[2], False])
-        positionsList.append([2365, 910, chars[3], False])
-        positionsList.append([2400, 800, chars[4], False])
+        positionsList.append([196, 443, chars[0], False])
+        positionsList.append([115, 513, chars[1], False])
+        positionsList.append([143, 610, chars[2], False])
+        positionsList.append([243, 605, chars[3], False])
+        positionsList.append([277, 511, chars[4], False])
 
     elif(length == 6):
-        positionsList.append([2323, 750, chars[0], False])
-        positionsList.append([2240, 800, chars[1], False])
-        positionsList.append([2252, 891, chars[2], False])
-        positionsList.append([2326, 935, chars[3], False])
-        positionsList.append([2405, 894, chars[4], False])
-        positionsList.append([2400, 800, chars[5], False])
+        positionsList.append([188, 441, chars[0], False])
+        positionsList.append([115, 488, chars[1], False])
+        positionsList.append([114, 587, chars[2], False])
+        positionsList.append([192, 623, chars[3], False])
+        positionsList.append([265, 582, chars[4], False])
+        positionsList.append([268, 493, chars[5], False])
 
     return positionsList
 
+def getBlueStacksTopleft():
+    bluestack = pyautogui.getWindowsWithTitle("BlueStacks")[0]
+    bluestack.restore()
+
+    return bluestack.topleft
+
 
 def makeMoviment(word, positions):
+    
+
     #primeira iteração precisa ir até o primeiro char e fazer o mouseDown
     for position in positions:
         if (position[2] == word[0]):
-            pyautogui.moveTo(position[0], position[1])
+            topLeft = getBlueStacksTopleft()
+            pyautogui.moveTo(position[0]+topLeft.x, position[1]+topLeft.y, 0.001)
             #time.sleep(0.1)
             pyautogui.mouseDown(button="left")
             position[3] = True
@@ -114,7 +123,8 @@ def makeMoviment(word, positions):
     for char in word:
         for position in positions:
             if((position[2] == char) and (not(position[3]))):
-                pyautogui.moveTo(position[0], position[1])
+                topLeft = getBlueStacksTopleft()
+                pyautogui.moveTo(position[0]+topLeft.x, position[1]+topLeft.y, 0.001)
                 #time.sleep(0.1)
                 position[3] = True
                 break
